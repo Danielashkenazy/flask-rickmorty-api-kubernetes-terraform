@@ -1,0 +1,24 @@
+replicaCount: 3
+
+image:
+  repository: danielashkenazy1/rick2
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8000
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  hosts:
+    - host: rick.local
+      paths:
+        - path: /api
+          pathType: Prefix
+        - path: /health
+          pathType: Prefix

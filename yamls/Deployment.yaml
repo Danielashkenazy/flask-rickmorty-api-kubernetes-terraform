@@ -1,0 +1,31 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: rickandmorty-api
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rick-api
+      version: "1"
+  template:
+    metadata:
+      labels:
+        app: rick-api
+        version: "1"
+    spec:
+      containers:
+        - name: ricknmortyapi
+          image: danielashkenazy1/rick2:latest
+          ports:
+            - containerPort: 8000
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+
